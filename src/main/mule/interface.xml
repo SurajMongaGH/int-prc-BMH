@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
+    <http:listener-config name="prc-book-my-holiday-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="8081" />
+    </http:listener-config>
+    <apikit:config name="prc-book-my-holiday-config" api="resource::c22665d2-ec5e-4c7b-998a-8ac6fec8a5fd:prc-book-my-holiday:1.0.2:raml:zip:prc-book-my-holiday.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <flow name="prc-book-my-holiday-main">
+        <http:listener config-ref="prc-book-my-holiday-httpListenerConfig" path="/api/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="prc-book-my-holiday-config" doc:id="47bdd443-d9a7-4948-841f-2d73edbecb03"/>
+        <error-handler>
+            <on-error-propagate type="APIKIT:BAD_REQUEST">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Bad request"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">400</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Method not allowed"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">405</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Not acceptable"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">406</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Unsupported media type"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">415</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Not Implemented"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">501</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+    <flow name="prc-book-my-holiday-console">
+        <http:listener config-ref="prc-book-my-holiday-httpListenerConfig" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="prc-book-my-holiday-config" doc:id="560d54bc-8ab0-473b-a575-98fdb40516e1"/>
+        <error-handler>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+                <ee:transform>
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+    <flow name="delete:\booking-details\(booking-id):prc-book-my-holiday-config">
+        <flow-ref doc:name="cancelBooking" doc:id="2f122577-ded9-456e-9f99-c7d209c55d23" name="deleteBookings" />
+    </flow>
+    <flow name="get:\bookhotel:prc-book-my-holiday-config">
+        <flow-ref doc:name="bookHotels" doc:id="73f5be0b-3d6d-4d34-bafa-5937ecd4470b" name="bookHotels" />
+    </flow>
+    <flow name="get:\cabs:prc-book-my-holiday-config">
+        <flow-ref doc:name="Flow Reference" doc:id="54952407-3ef7-4d75-b07e-899dcabf5d1f" name="getCabs" />
+    </flow>
+    <flow name="get:\flights:prc-book-my-holiday-config">
+        <flow-ref doc:name="getAllFlights" doc:id="2d0f6d35-8f61-460f-acec-977dd149c68d" name="getAllFlights" />
+    </flow>
+    <flow name="get:\hotels:prc-book-my-holiday-config">
+        <flow-ref doc:name="getHotels" doc:id="157b0d3f-d03e-461e-985b-0d9976b68a8a" name="getHotels" />
+    </flow>
+    <flow name="get:\booking-details\(booking-id):prc-book-my-holiday-config">
+        <flow-ref doc:name="flightBookingDetails" doc:id="f0b04cdb-e14b-4c42-9293-e7cd9c9fe7f7" name="flightBookingDetails" />
+    </flow>
+    <flow name="get:\bookedCabDetails\(bookingId):prc-book-my-holiday-config">
+        <flow-ref doc:name="cabBookingDetail" doc:id="5b1595a9-518e-4f1e-bcc0-2df762d76690" name="cabBookingDetails" />
+    </flow>
+    <flow name="post:\book-flights:application\json:prc-book-my-holiday-config">
+        <flow-ref doc:name="bookFlight" doc:id="829fba31-e146-41a7-b116-040bd7722aa8" name="bookFlight" />
+    </flow>
+    <flow name="post:\bookCab:application\json:prc-book-my-holiday-config">
+        <flow-ref doc:name="BookCab" doc:id="4ae952c8-8414-40bb-bb87-9c22c634f838" name="BookCab" />
+    </flow>
+</mule>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:cab-booking-api="http://www.mulesoft.org/schema/mule/cab-booking-api" xmlns:filghts-indigo="http://www.mulesoft.org/schema/mule/filghts-indigo" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/filghts-indigo http://www.mulesoft.org/schema/mule/filghts-indigo/current/mule-filghts-indigo.xsd
+http://www.mulesoft.org/schema/mule/cab-booking-api http://www.mulesoft.org/schema/mule/cab-booking-api/current/mule-cab-booking-api.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<filghts-indigo:config name="Filghts_indigo_Config" doc:name="Filghts-indigo Config" doc:id="06756bf9-1df0-40b6-93f4-0cdc1deb4644" property_host="int-sys-flights.us-e2.cloudhub.io" property_port="80" property_protocol="HTTP" property_basePath="/api" />
+	<cab-booking-api:config name="Cab_booking_API_Config" doc:name="Cab-booking-API Config" doc:id="f3db7a4b-3aee-456e-b288-b27662dc8be6" property_host="int-sys-cabs.us-e2.cloudhub.io" property_port="80" property_protocol="HTTP" property_basePath="/api"/>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="e7a8f725-4f9d-4358-a263-0f1ed6c5a52a" basePath="/api" >
+		<http:request-connection host="int-sys-flights.us-e2.cloudhub.io" port="80" />
+	</http:request-config>
+	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="a4ddaccf-5625-490a-a227-ea56efa64603" >
+		<wsc:connection wsdlLocation="http://int-sys-hotels.us-e2.cloudhub.io//hotel/default_Port?wsdl" service="hotel" port="default_Port" address="http://int-sys-hotels.us-e2.cloudhub.io/hotel/default_Port" >
+			<wsc:web-service-security actor="http://schemas.xmlsoap.org/soap/actor/next" />
+		</wsc:connection>
+	</wsc:config>
+	<flow name="deleteBookings" doc:id="60c21592-ec97-4130-b20f-9b110f2d41ef" >
+		<filghts-indigo:delete-booking-detail-by-booking-id doc:name="Delete booking detail by booking id" doc:id="6f5574cf-c1ef-4072-961e-9be668458283" config-ref="Filghts_indigo_Config" booking-id="#[attributes.uriParams.'booking-id']" client-id="2114b12a2615470b9fe3e7b63cce1b8a" client-secret="A7413Dabf4694787aB1B828fD5F9206F" />
+	</flow>
+	<flow name="getHotels" doc:id="c82fcf56-22f4-4392-a0a6-8d7f57dd532e" >
+		<set-variable value="#[attributes.queryParams.Place]" doc:name="Set Variable" doc:id="f201fd3a-307f-42d9-a87d-bc9c8b6afac3" variableName="place"/>
+		<ee:transform doc:name="Transform Message" doc:id="4f96bfcb-18bf-49b3-ae4f-9680761930e4" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 https://www.example.com/schemas
+---
+{
+	ns0#GET_Hotels_GET_InputMessage: {
+		Place: attributes.queryParams.Place
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="a1bbbf02-4535-461e-a6c0-afa162fd77b9" config-ref="Web_Service_Consumer_Config" operation="GET_Hotels_GET"/>
+		<ee:transform doc:name="Transform Message" doc:id="e98013b0-e5ed-4fca-8b50-01058a0af235" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+
+---
+payload.body.response.*hotel]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="getAllFlights" doc:id="b45dea38-d2b4-41d4-b0f9-55e29e97eb0c" >
+		<filghts-indigo:get-flights doc:name="Get flights" doc:id="9604ac82-8976-477f-ab31-b479be3a5d00" config-ref="Filghts_indigo_Config" source="#[attributes.queryParams.source]" destination="#[attributes.queryParams.destination]" date="#[attributes.queryParams.date]" number-of-seats="#[attributes.queryParams.number_of_seats]" client-id="2114b12a2615470b9fe3e7b63cce1b8a" client-secret="A7413Dabf4694787aB1B828fD5F9206F"/>
+	</flow>
+	<flow name="flightBookingDetails" doc:id="11d22e54-8442-494c-8ee5-1e8fe293f740" >
+		<logger level="INFO" doc:name="Logger" doc:id="93f3ac48-0ec7-41b8-af54-8ba04d8258e5" />
+		<filghts-indigo:get-booking-detail-by-booking-id doc:name="Get booking detail by booking id" doc:id="f479925f-e44e-4887-9aec-442943f8bfe5" config-ref="Filghts_indigo_Config" booking-id="#[attributes.uriParams.'booking-id']" client-id="2114b12a2615470b9fe3e7b63cce1b8a" client-secret="A7413Dabf4694787aB1B828fD5F9206F"/>
+	</flow>
+	<flow name="getCabs" doc:id="a812994d-073b-499c-8871-c421a527759e" >
+		<cab-booking-api:get-cabs doc:name="Get cabs" doc:id="e92b5b88-261b-4d0c-8472-43b6b3a78644" config-ref="Cab_booking_API_Config" source="#[attributes.queryParams.source]" destination="#[attributes.queryParams.destination]"/>
+	</flow>
+	<flow name="BookCab" doc:id="e14a9180-d92d-4d0b-957c-4b5d10d88ac2" >
+		<cab-booking-api:create-book-cab doc:name="Create book cab" doc:id="f1d18f5e-9684-4944-9a20-5be0646dda05" config-ref="Cab_booking_API_Config"/>
+	</flow>
+	<flow name="cabBookingDetails" doc:id="c5c13dad-9ee4-47d2-9787-81d92d01c0b3" >
+		<cab-booking-api:get-booked-cab-detail-by-booking-id doc:name="Get booked cab detail by booking id" doc:id="eda78023-d87b-4606-ad68-ef9ae44bb768" config-ref="Cab_booking_API_Config" booking-id="#[attributes.uriParams.bookingId]"/>
+	</flow>
+	<flow name="bookFlight" doc:id="0dfab332-98cd-440e-9dea-f6d2976cd093" >
+		<filghts-indigo:create-book-flight doc:name="Create book flight" doc:id="499ee18d-38bd-41b4-bfd6-2f1d4e80b710" config-ref="Filghts_indigo_Config" client-id="2114b12a2615470b9fe3e7b63cce1b8a" client-secret="A7413Dabf4694787aB1B828fD5F9206F"/>
+	</flow>
+	<flow name="bookHotels" doc:id="1533dcf8-16d2-4db9-88c5-aca16cdc5443" >
+		<set-variable value="#[attributes.queryParams.Place]" doc:name="Set Variable" doc:id="2372071e-f2f4-4c7c-ab05-da58d69a4318" variableName="Place"/>
+		<set-variable value="#[attributes.queryParams.rooms]" doc:name="Set Variable" doc:id="095a5ab2-f426-4ce3-9b71-a886a441cf4f" variableName="rooms"/>
+		<set-variable value="#[attributes.queryParams.date]" doc:name="Set Variable" doc:id="2e82e213-1aa9-48f8-adb4-3a7ba7ab4dea" variableName="date"/>
+		<ee:transform doc:name="Transform Message" doc:id="7464b5b1-7229-4004-b5a0-9eed498def57" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+ns ns0 https://www.example.com/schemas
+---
+{
+	ns0#GET_Bookhotel_GET_InputMessage: {
+		Place: vars.Place,
+		rooms: vars.rooms,
+		date: vars.date
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<wsc:consume doc:name="Consume" doc:id="26790970-f045-4354-ad2b-770bb1150f6f" config-ref="Web_Service_Consumer_Config" operation="GET_Bookhotel_GET"/>
+		<ee:transform doc:name="Transform Message" doc:id="9e9a7a9e-5ed9-458f-9938-4d09b35e1624" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload.body.response]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

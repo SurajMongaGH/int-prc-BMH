@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="interface-suite.xml" />
+	<munit:test name="delete:\booking-details\(booking-id):prc-book-my-holiday-config-test" doc:id="d1380c20-a356-4c5a-ac87-e116add3e7d9" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock cancelBooking" doc:id="60e18e87-14f0-4e15-935e-cfac0d960b00" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="2f122577-ded9-456e-9f99-c7d209c55d23" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://deletebookingdetailsbookingidprcbookmyholidayconfigtest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://deletebookingdetailsbookingidprcbookmyholidayconfigtest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://deletebookingdetailsbookingidprcbookmyholidayconfigtest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="58edafcf-54d3-4485-ba52-af69ba852ca9" >
+				<munit:payload value="#[readUrl('classpath://deletebookingdetailsbookingidprcbookmyholidayconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://deletebookingdetailsbookingidprcbookmyholidayconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://deletebookingdetailsbookingidprcbookmyholidayconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to delete:\booking-details\(booking-id):prc-book-my-holiday-config" doc:id="becba8ac-9bee-417f-92ab-88e92f480d19" name="delete:\booking-details\(booking-id):prc-book-my-holiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="4a2f42a6-e1f3-46a1-a690-910f1fb37ac3" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import deletebookingdetailsbookingidprcbookmyholidayconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="get:\bookhotel:prc-book-my-holiday-config-test" doc:id="18130c47-5d29-434a-b487-6ac15c0f6c24" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock bookHotels" doc:id="9f5ac0fe-8c63-4732-8355-34c0a3579ee1" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="73f5be0b-3d6d-4d34-bafa-5937ecd4470b" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://getbookhotelprcbookmyholidayconfigtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://getbookhotelprcbookmyholidayconfigtest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://getbookhotelprcbookmyholidayconfigtest\mock_variable_.dwl')]" />
+						<munit-tools:variable key="date" value="#[output application/java --- readUrl('classpath://getbookhotelprcbookmyholidayconfigtest\mock_variable_1.dwl')]" mediaType="application/java" encoding="UTF-8" />
+						<munit-tools:variable key="rooms" value="#[output application/java --- readUrl('classpath://getbookhotelprcbookmyholidayconfigtest\mock_variable_2.dwl')]" mediaType="application/java" encoding="UTF-8" />
+						<munit-tools:variable key="Place" value="#[output application/java --- readUrl('classpath://getbookhotelprcbookmyholidayconfigtest\mock_variable_3.dwl')]" mediaType="application/java" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="5dc646af-33e8-42e9-b892-48a9f3246161" >
+				<munit:payload value="#[readUrl('classpath://getbookhotelprcbookmyholidayconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getbookhotelprcbookmyholidayconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getbookhotelprcbookmyholidayconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\bookhotel:prc-book-my-holiday-config" doc:id="dce0ee3c-a161-4a05-a4de-6f9229725fea" name="get:\bookhotel:prc-book-my-holiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="d61f449a-cea7-4ec5-b683-453af9c1b27f" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getbookhotelprcbookmyholidayconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="get:\cabs:prc-book-my-holiday-config-test" doc:id="d6d2fba3-e698-475b-81cf-d26325ba767e" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Flow Reference" doc:id="60613c91-f30d-4d12-af78-85b2d3018ca9" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="54952407-3ef7-4d75-b07e-899dcabf5d1f" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://getcabsprcbookmyholidayconfigtest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://getcabsprcbookmyholidayconfigtest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://getcabsprcbookmyholidayconfigtest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="033be1af-4f88-4c06-a543-7657019747ad" >
+				<munit:payload value="#[readUrl('classpath://getcabsprcbookmyholidayconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getcabsprcbookmyholidayconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getcabsprcbookmyholidayconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\cabs:prc-book-my-holiday-config" doc:id="bbe8b38b-bc26-469c-a35a-818e7f1e8ab8" name="get:\cabs:prc-book-my-holiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="448cb934-b2fb-4c7a-9642-c2ff9526a36a" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getcabsprcbookmyholidayconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="get:\flights:prc-book-my-holiday-config-test" doc:id="faec55cf-29cc-4008-b470-b1fda5a2a53b" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock getAllFlights" doc:id="dbb35f6f-6dd5-48d6-9f22-c0a0181eb39a" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="2d0f6d35-8f61-460f-acec-977dd149c68d" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://getflightsprcbookmyholidayconfigtest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://getflightsprcbookmyholidayconfigtest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://getflightsprcbookmyholidayconfigtest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="78220429-906c-4627-a3d6-43055b9d4d92" >
+				<munit:payload value="#[readUrl('classpath://getflightsprcbookmyholidayconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getflightsprcbookmyholidayconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getflightsprcbookmyholidayconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\flights:prc-book-my-holiday-config" doc:id="9ad206ce-c812-4d38-8334-a3013de554ae" name="get:\flights:prc-book-my-holiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="bbfeebe0-ca69-4444-973e-82945cdc6adb" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getflightsprcbookmyholidayconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="get:\hotels:prc-book-my-holiday-config-test" doc:id="82dd79a8-4d3b-40d4-9a5f-c744d1de5518" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock getHotels" doc:id="077a53a6-48c4-44a7-accf-984aa26b69a6" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="157b0d3f-d03e-461e-985b-0d9976b68a8a" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://gethotelsprcbookmyholidayconfigtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://gethotelsprcbookmyholidayconfigtest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://gethotelsprcbookmyholidayconfigtest\mock_variable_.dwl')]" />
+						<munit-tools:variable key="place" value="#[output application/java --- readUrl('classpath://gethotelsprcbookmyholidayconfigtest\mock_variable_1.dwl')]" mediaType="application/java" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="108216d1-b986-4e9c-bbe9-e5584732a3a6" >
+				<munit:payload value="#[readUrl('classpath://gethotelsprcbookmyholidayconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://gethotelsprcbookmyholidayconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://gethotelsprcbookmyholidayconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\hotels:prc-book-my-holiday-config" doc:id="f6fb6f6d-b4d5-4bfb-8feb-59af2e303b6d" name="get:\hotels:prc-book-my-holiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="0b080566-ccc3-421c-bfc6-a71a6cb1fc45" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import gethotelsprcbookmyholidayconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="get:\booking-details\(booking-id):prc-book-my-holiday-config-test" doc:id="9b25f1e2-e5ff-4931-ae2d-8d780e99f4a4" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock flightBookingDetails" doc:id="0419505e-0f66-4fa5-8e26-5831e91335bb" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="f0b04cdb-e14b-4c42-9293-e7cd9c9fe7f7" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://getbookingdetailsbookingidprcbookmyholidayconfigtest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://getbookingdetailsbookingidprcbookmyholidayconfigtest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://getbookingdetailsbookingidprcbookmyholidayconfigtest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="5048e6e9-5eaf-40d5-b61e-bcdf18beef12" >
+				<munit:payload value="#[readUrl('classpath://getbookingdetailsbookingidprcbookmyholidayconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getbookingdetailsbookingidprcbookmyholidayconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getbookingdetailsbookingidprcbookmyholidayconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\booking-details\(booking-id):prc-book-my-holiday-config" doc:id="92ccf1d0-e68e-47f6-9d1f-8f69d45a93f8" name="get:\booking-details\(booking-id):prc-book-my-holiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="0614387d-d8fd-4d28-8d3b-40427edf91b6" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getbookingdetailsbookingidprcbookmyholidayconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="get:\bookedCabDetails\(bookingId):prc-book-my-holiday-config-test" doc:id="337116d2-fe47-4b8e-87ef-43c82313d1af" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock cabBookingDetail" doc:id="02872ed0-6454-4f8a-9355-8b61324a2ab4" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="5b1595a9-518e-4f1e-bcc0-2df762d76690" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://getbookedCabDetailsbookingIdprcbookmyholidayconfigtest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://getbookedCabDetailsbookingIdprcbookmyholidayconfigtest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://getbookedCabDetailsbookingIdprcbookmyholidayconfigtest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="e1422f4b-d9be-4a54-beea-3f9c9a97cd43" >
+				<munit:payload value="#[readUrl('classpath://getbookedCabDetailsbookingIdprcbookmyholidayconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getbookedCabDetailsbookingIdprcbookmyholidayconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getbookedCabDetailsbookingIdprcbookmyholidayconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\bookedCabDetails\(bookingId):prc-book-my-holiday-config" doc:id="ba226744-0e28-4d1a-8f6a-d4e44e457099" name="get:\bookedCabDetails\(bookingId):prc-book-my-holiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="7c0eb7ea-5de0-4004-8f36-2fa01f4c4297" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getbookedCabDetailsbookingIdprcbookmyholidayconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="post:\book-flights:application\json:prc-book-my-holiday-config-test" doc:id="d4641eec-3f53-4004-9926-05d0d6eb14e0" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock bookFlight" doc:id="9a929092-6b52-4f64-8bc5-e5d1b8eaf85f" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="829fba31-e146-41a7-b116-040bd7722aa8" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://postbookflightsapplicationjsonprcbookmyholidayconfigtest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://postbookflightsapplicationjsonprcbookmyholidayconfigtest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://postbookflightsapplicationjsonprcbookmyholidayconfigtest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="3dba5c8a-dd55-46eb-bfe0-342cf263cda1" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://postbookflightsapplicationjsonprcbookmyholidayconfigtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://postbookflightsapplicationjsonprcbookmyholidayconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://postbookflightsapplicationjsonprcbookmyholidayconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to post:\book-flights:application\json:prc-book-my-holiday-config" doc:id="6bd7d1b9-6624-4594-9d81-ee68ee86c025" name="post:\book-flights:application\json:prc-book-my-holiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="a35d2505-2981-4e69-9546-4e62dc8d8340" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import postbookflightsapplicationjsonprcbookmyholidayconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="post:\bookCab:application\json:prc-book-my-holiday-config-test" doc:id="09d74319-6dc7-4606-a0e2-0c08136f5d00" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock BookCab" doc:id="25130eb1-2a7d-46bb-b2d1-117a0fc7111b" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="4ae952c8-8414-40bb-bb87-9c22c634f838" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://postbookCabapplicationjsonprcbookmyholidayconfigtest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://postbookCabapplicationjsonprcbookmyholidayconfigtest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://postbookCabapplicationjsonprcbookmyholidayconfigtest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="bac83ba8-3224-4719-8a78-b033506f308b" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://postbookCabapplicationjsonprcbookmyholidayconfigtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://postbookCabapplicationjsonprcbookmyholidayconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://postbookCabapplicationjsonprcbookmyholidayconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to post:\bookCab:application\json:prc-book-my-holiday-config" doc:id="24efb956-6aa3-4e61-82b4-5a120e95283e" name="post:\bookCab:application\json:prc-book-my-holiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="6e039998-b73b-4866-baa5-2e15f515d240" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import postbookCabapplicationjsonprcbookmyholidayconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="prc-book-my-holiday-main-test" doc:id="124faa8f-a615-4dbd-8491-409167503c83">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="Mock APIkit Router" doc:id="c1f76d4e-0011-419f-8f60-c4ed965d3981" processor="apikit:router">
+				<munit-tools:with-attributes>
+					<munit-tools:with-attribute whereValue="47bdd443-d9a7-4948-841f-2d73edbecb03" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return>
+					<munit-tools:error typeId="APIKIT:BAD_REQUEST" />
+					<munit-tools:variables>
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://prcbookmyholidaymaintest\mock_variable_.dwl')]" />
+						<munit-tools:variable key="httpStatus" value="#[readUrl('classpath://prcbookmyholidaymaintest\mock_variable_1.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="fc36320f-90ba-40a3-ac64-20ce56dd3b51">
+				<munit:payload value="#[readUrl('classpath://prcbookmyholidaymaintest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://prcbookmyholidaymaintest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution>
+			<try doc:name="Try" doc:id="d824dbfa-1da3-4b33-bfd5-1774f6ff4dc0">
+				<flow-ref doc:name="Flow-ref to prc-book-my-holiday-main" doc:id="ac4f43e1-5ec5-424e-9bb4-40883257578a" name="prc-book-my-holiday-main" />
+				<error-handler>
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="3ce80c41-45e5-42e1-9db7-9b399bb21be8">
+						<logger level="INFO" doc:name="Logger" doc:id="dba1f47f-e1d1-4377-9167-573f16efa8df" message="Inside error continue" />
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="a2ddd11a-7061-4eb9-9050-59e9428fca9b" is='#[MunitTools::equalTo("Bad request")]' expression="#[payload.message]" />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="NOT_FOUND_prc-book-my-holiday-main-test" doc:id="58d141ed-69bd-4e24-b64b-0b90c05254e1" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="NOT_FOUND_Mock APIkit Router" doc:id="944acded-adac-4619-a0b0-2b3ee40fc82e" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="47bdd443-d9a7-4948-841f-2d73edbecb03" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_FOUND" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://prcbookmyholidaymaintest\mock_variable_.dwl')]" />
+						<munit-tools:variable key="httpStatus" value="#[readUrl('classpath://prcbookmyholidaymaintest\mock_variable_1.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="NOT_FOUND_Set Input" doc:id="372a07f2-c480-4e0c-bd11-ca4c1904e23e" >
+				<munit:payload value="#[readUrl('classpath://prcbookmyholidaymaintest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://prcbookmyholidaymaintest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<try doc:name="NOT_FOUND_Try" doc:id="76dd4a5e-ccc7-4bef-93d9-174e1f53d897" >
+				<flow-ref doc:name="NOT_FOUND_Flow-ref to prc-book-my-holiday-main" doc:id="c8c79c35-cd0c-4ce1-a2ed-6ea4cf22ad09" name="prc-book-my-holiday-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="NOT_FOUND_On Error Continue" doc:id="cae1aaeb-6449-4012-9bbb-39786abb99ed" >
+						<logger level="INFO" doc:name="NOT_FOUND_Logger" doc:id="4d9a7fa3-18a8-4518-b3ed-2c67d6e59cd7" message="Inside error continue" />
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="NOT_FOUND_Assert that" doc:id="6f80e5a5-9978-49ef-9624-b508c2120029" expression="#[payload.message]" is='#[MunitTools::equalTo("Resource not found")]' />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="METHOD_NOT_ALLOWED_prc-book-my-holiday-main-test" doc:id="90346f64-af66-4be0-9d27-081c71130b1b" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="METHOD_NOT_ALLOWED_Mock APIkit Router" doc:id="12dc8415-b108-4ca9-999e-47748892155a" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="47bdd443-d9a7-4948-841f-2d73edbecb03" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:METHOD_NOT_ALLOWED" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://prcbookmyholidaymaintest\mock_variable_.dwl')]" />
+						<munit-tools:variable key="httpStatus" value="#[readUrl('classpath://prcbookmyholidaymaintest\mock_variable_1.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="METHOD_NOT_ALLOWED_Set Input" doc:id="b5bf8170-89be-45dc-8082-0d0397778932" >
+				<munit:payload value="#[readUrl('classpath://prcbookmyholidaymaintest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://prcbookmyholidaymaintest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<try doc:name="METHOD_NOT_ALLOWED_Try" doc:id="b567893d-110b-4029-ba81-30f4f5c6815d" >
+				<flow-ref doc:name="METHOD_NOT_ALLOWED_Flow-ref to prc-book-my-holiday-main" doc:id="ff8cf5dd-c3c6-44be-a3ba-02408d60286e" name="prc-book-my-holiday-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="METHOD_NOT_ALLOWED_On Error Continue" doc:id="f0f49406-4d93-4a6c-b51c-3738aae55306" >
+						<logger level="INFO" doc:name="METHOD_NOT_ALLOWED_Logger" doc:id="cc5ec73a-79d1-477e-8562-627790e86d2f" message="Inside error continue" />
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="METHOD_NOT_ALLOWED_Assert that" doc:id="e8787719-9665-4d6d-bc45-71fa95d51540" expression="#[payload.message]" is='#[MunitTools::equalTo("Method not allowed")]' />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="NOT_ACCEPTABLE_prc-book-my-holiday-main-test" doc:id="a48d605b-6329-431b-9e17-8e7c6d6c7358" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="NOT_ACCEPTABLE_Mock APIkit Router" doc:id="b4986762-2a01-468a-a8c3-4f8c9042d67b" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="47bdd443-d9a7-4948-841f-2d73edbecb03" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_ACCEPTABLE" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://prcbookmyholidaymaintest\mock_variable_.dwl')]" />
+						<munit-tools:variable key="httpStatus" value="#[readUrl('classpath://prcbookmyholidaymaintest\mock_variable_1.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="NOT_ACCEPTABLE_Set Input" doc:id="05e82367-bdfd-4191-991c-d132fba9e47b" >
+				<munit:payload value="#[readUrl('classpath://prcbookmyholidaymaintest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://prcbookmyholidaymaintest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<try doc:name="NOT_ACCEPTABLE_Try" doc:id="41d1c8c3-19b0-443b-8ed8-bb2d730a56dd" >
+				<flow-ref doc:name="NOT_ACCEPTABLE_Flow-ref to prc-book-my-holiday-main" doc:id="a3e75c21-8010-41bd-9590-f5e9e024b893" name="prc-book-my-holiday-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="NOT_ACCEPTABLE_On Error Continue" doc:id="6d72ea2d-f3ad-4fa7-86ea-c9e182e81e9d" >
+						<logger level="INFO" doc:name="NOT_ACCEPTABLE_Logger" doc:id="82fe2da9-fe2d-4d90-a048-f816b00d24f1" message="Inside error continue" />
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="NOT_ACCEPTABLE_Assert that" doc:id="161294ff-1297-4a47-b209-0ecc8c816a46" expression="#[payload.message]" is='#[MunitTools::equalTo("Not acceptable")]' />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="UNSUPPORTED_MEDIA_TYPE_prc-book-my-holiday-main-test" doc:id="d56317fe-4863-4255-84a0-a3b356754108" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="UNSUPPORTED_MEDIA_TYPE_Mock APIkit Router" doc:id="79844a44-8498-44eb-b7e8-a20331ca02d8" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="47bdd443-d9a7-4948-841f-2d73edbecb03" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:UNSUPPORTED_MEDIA_TYPE" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://prcbookmyholidaymaintest\mock_variable_.dwl')]" />
+						<munit-tools:variable key="httpStatus" value="#[readUrl('classpath://prcbookmyholidaymaintest\mock_variable_1.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="UNSUPPORTED_MEDIA_TYPE_Set Input" doc:id="6082faff-c57c-45aa-8770-039902d8c18d" >
+				<munit:payload value="#[readUrl('classpath://prcbookmyholidaymaintest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://prcbookmyholidaymaintest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<try doc:name="UNSUPPORTED_MEDIA_TYPE_Try" doc:id="1291e48d-ce06-4484-b3a4-8c85737d5a45" >
+				<flow-ref doc:name="UNSUPPORTED_MEDIA_TYPE_Flow-ref to prc-book-my-holiday-main" doc:id="8aec4bab-119a-4e48-8ea4-a3c68cd39efb" name="prc-book-my-holiday-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="UNSUPPORTED_MEDIA_TYPE_On Error Continue" doc:id="c087e668-ef66-44e3-9446-a25ab928e4dd" >
+						<logger level="INFO" doc:name="UNSUPPORTED_MEDIA_TYPE_Logger" doc:id="697b8866-67c1-4fbc-8c4d-d5d18dde7331" message="Inside error continue" />
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="UNSUPPORTED_MEDIA_TYPE_Assert that" doc:id="27b1d6bc-e468-4bf8-9caa-44bb2c81249b" expression="#[payload.message]" is='#[MunitTools::equalTo("Unsupported media type")]' />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="NOT_IMPLEMENTED_prc-book-my-holiday-main-test" doc:id="b975972d-f4c4-418d-9580-c94a7b3eb007" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="NOT_IMPLEMENTED_Mock APIkit Router" doc:id="1ebe4259-9295-4275-8a5b-9b29827ae930" processor="apikit:router" >
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="47bdd443-d9a7-4948-841f-2d73edbecb03" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_IMPLEMENTED" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://prcbookmyholidaymaintest\mock_variable_.dwl')]" />
+						<munit-tools:variable key="httpStatus" value="#[readUrl('classpath://prcbookmyholidaymaintest\mock_variable_1.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="NOT_IMPLEMENTED_Set Input" doc:id="0f30f65f-f8d6-4f01-98a2-595b4e909b1d" >
+				<munit:payload value="#[readUrl('classpath://prcbookmyholidaymaintest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://prcbookmyholidaymaintest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<try doc:name="NOT_IMPLEMENTED_Try" doc:id="3a9df10d-6a86-4122-bd43-c9de4b766320" >
+				<flow-ref doc:name="NOT_IMPLEMENTED_Flow-ref to prc-book-my-holiday-main" doc:id="b1453a85-7b0b-48a2-84c7-98081ced3700" name="prc-book-my-holiday-main" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="NOT_IMPLEMENTED_On Error Continue" doc:id="4c11240d-19b7-42b1-9a77-43bb745466d9" >
+						<logger level="INFO" doc:name="NOT_IMPLEMENTED_Logger" doc:id="a170de31-3a66-44f7-aefd-99e6fa307dab" message="Inside error continue" />
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="NOT_IMPLEMENTED_Assert that" doc:id="0470d0f9-98be-462a-988b-2c7c0a8bf1b6" expression="#[payload.message]" is='#[MunitTools::equalTo("Not Implemented")]' />
+		</munit:validation>
+	</munit:test>
+	<munit:test name="prc-book-my-holiday-console-test" doc:id="7b09b18c-603d-4826-8ca7-51573ba495e5" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock APIkit Console" doc:id="2984a4b4-b74a-4233-9c3d-582e1de2276f" processor="apikit:console">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="560d54bc-8ab0-473b-a575-98fdb40516e1" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_FOUND" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://prcbookmyholidayconsoletest\mock_variable_.dwl')]" />
+						<munit-tools:variable key="httpStatus" value="#[readUrl('classpath://prcbookmyholidayconsoletest\mock_variable_1.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="da7a72b6-32b6-4fc6-8804-7a57819cc3a6" >
+				<munit:payload value="#[readUrl('classpath://prcbookmyholidayconsoletest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://prcbookmyholidayconsoletest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<try doc:name="Try" doc:id="60dd5f70-98d2-4766-8e3c-59a540bde846" >
+				<flow-ref doc:name="Flow-ref to prc-book-my-holiday-console" doc:id="3488b17a-a832-4883-98a2-1146a19f1efa" name="prc-book-my-holiday-console" />
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="7bbff2f7-2643-407f-82b6-358e44d258d7" >
+						<logger level="INFO" doc:name="Logger" doc:id="70c9df58-a250-4beb-9340-520bb5ac4fff" message="In Console Error Continue"/>
+					</on-error-continue>
+				</error-handler>
+			</try>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="c68aafcd-f544-42a1-9522-1f93758bb037" is='#[MunitTools::equalTo("Resource not found")]' expression="#[payload.message]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

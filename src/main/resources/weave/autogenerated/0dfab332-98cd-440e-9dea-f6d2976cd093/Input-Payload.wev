@@ -1,0 +1,12 @@
+%dw 2.0
+
+type auto_0dfab332_98cd_440e_9dea_f6d2976cd093_Input_Payload = {
+  date: String, 
+  destination: String, 
+  person_name: String, 
+  source: String, 
+  flight_id: Number, 
+  number_of_seats: Number, 
+  _?: Any
+}
+

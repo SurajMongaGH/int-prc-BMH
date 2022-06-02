@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="implementation-suite.xml" />
+	<munit:test name="deleteBookings-test" doc:id="43a245fe-2ea9-4d36-acac-982bf3e3bd8f" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Delete booking detail by booking id" doc:id="d88610de-52db-499c-9201-1b72e25ab69a" processor="filghts-indigo:delete-booking-detail-by-booking-id">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="6f5574cf-c1ef-4072-961e-9be668458283" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://deleteBookingstest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://deleteBookingstest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://deleteBookingstest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="56cc405f-12c2-4260-b36f-4670125481d6" >
+				<munit:payload value="#[readUrl('classpath://deleteBookingstest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://deleteBookingstest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://deleteBookingstest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to deleteBookings" doc:id="f38a0b73-0fc6-4b0e-babe-fbb92de06aad" name="deleteBookings"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="a3e19be9-559b-473a-8282-18b4fafc5513" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import deleteBookingstest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="getAllFlights-test" doc:id="204ff454-28a4-47a4-8b01-fa3052485c61" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Get flights" doc:id="e6e3402a-8acc-4178-a28d-f1e6cc4c2b23" processor="filghts-indigo:get-flights">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="9604ac82-8976-477f-ab31-b479be3a5d00" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://getAllFlightstest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://getAllFlightstest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://getAllFlightstest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="85f4eb59-459d-42a2-80d3-f85e9c9f333c" >
+				<munit:payload value="#[readUrl('classpath://getAllFlightstest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getAllFlightstest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getAllFlightstest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to getAllFlights" doc:id="7d31578a-7cb7-48b8-b2ef-2c62ba1c26e5" name="getAllFlights"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="dc315634-3826-46f2-8479-4f5effcc3817" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getAllFlightstest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="flightBookingDetails-test" doc:id="3f6afc49-6db3-4f3f-92c7-dac2e898635a" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Get booking detail by booking id" doc:id="52e0f16f-c7dc-41dd-ac09-94a211d9d7d4" processor="filghts-indigo:get-booking-detail-by-booking-id">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="f479925f-e44e-4887-9aec-442943f8bfe5" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://flightBookingDetailstest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://flightBookingDetailstest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://flightBookingDetailstest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="5f6e6977-8706-4cfc-b5c9-aca11eb0f893" >
+				<munit:payload value="#[readUrl('classpath://flightBookingDetailstest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://flightBookingDetailstest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://flightBookingDetailstest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to flightBookingDetails" doc:id="9fd35fb1-fb14-4d37-ba91-ae94eeb6e99b" name="flightBookingDetails"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="340ba39b-c5d7-4c3f-a9c0-23036b9f1126" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import flightBookingDetailstest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="getCabs-test" doc:id="caee5f33-3039-4199-a2e5-03f9a0c82403" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Get cabs" doc:id="79347106-1867-4195-9ece-bead63e6b823" processor="cab-booking-api:get-cabs">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="e92b5b88-261b-4d0c-8472-43b6b3a78644" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://getCabstest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://getCabstest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://getCabstest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="80d164b8-ccb9-46f6-9fc7-6054cfcb7262" >
+				<munit:payload value="#[readUrl('classpath://getCabstest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getCabstest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getCabstest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to getCabs" doc:id="6c44ed3e-1af8-4202-bc21-b86246ff9e73" name="getCabs"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="6413a803-2b89-4760-ac00-a62ed7491c41" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getCabstest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="BookCab-test" doc:id="98946e04-da12-4500-a41d-0a4b1e0937a8" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Create book cab" doc:id="a96fd785-053a-4c6c-8053-608ef841dc5b" processor="cab-booking-api:create-book-cab">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="f1d18f5e-9684-4944-9a20-5be0646dda05" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://BookCabtest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://BookCabtest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://BookCabtest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="b90dd3b3-b465-4b97-af72-327c8fa67c22" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://BookCabtest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://BookCabtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://BookCabtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to BookCab" doc:id="78aafa97-201c-42ef-9180-7d3a6beb8bab" name="BookCab"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="ccdb8280-9bc9-4926-bb28-865871a79899" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import BookCabtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="cabBookingDetails-test" doc:id="20e55014-8d55-45ea-853e-359149186cff" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Get booked cab detail by booking id" doc:id="d70ca7af-dae3-4285-a6c4-5f862ff96ff2" processor="cab-booking-api:get-booked-cab-detail-by-booking-id">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="eda78023-d87b-4606-ad68-ef9ae44bb768" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://cabBookingDetailstest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://cabBookingDetailstest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://cabBookingDetailstest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="562ef60e-e141-4a29-8523-d793609e8a12" >
+				<munit:payload value="#[readUrl('classpath://cabBookingDetailstest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://cabBookingDetailstest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://cabBookingDetailstest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to cabBookingDetails" doc:id="e7da8401-4764-46e3-a116-f894ab4afc29" name="cabBookingDetails"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="a41abd4d-0c4c-4c34-a12a-b5af7086adeb" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import cabBookingDetailstest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="bookFlight-test" doc:id="0e300a3a-095d-4114-ad93-f0e45166fc28" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Create book flight" doc:id="9187b289-ed34-4827-9e34-e4913241e532" processor="filghts-indigo:create-book-flight">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="499ee18d-38bd-41b4-bfd6-2f1d4e80b710" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://bookFlighttest\mock_payload.dwl')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[readUrl('classpath://bookFlighttest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://bookFlighttest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="9094767e-c197-4bff-8177-94a8e32acdc8" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://bookFlighttest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://bookFlighttest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://bookFlighttest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to bookFlight" doc:id="9e169de1-48d5-477d-af47-df07ea5980f7" name="bookFlight"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="6aaa3e96-588a-492d-87ba-cad5ccad2df6" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import bookFlighttest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="bookHotels-test" doc:id="7a90a59e-714e-4af9-aecc-4c17c4631dec" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Consume" doc:id="d0fd5d9d-5af9-4ef5-b795-5835165d371b" processor="wsc:consume">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="26790970-f045-4354-ad2b-770bb1150f6f" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/java --- readUrl('classpath://bookHotelstest\mock_payload.dwl')]" mediaType="application/java" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://bookHotelstest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://bookHotelstest\mock_variable_.dwl')]" />
+						<munit-tools:variable key="date" value="#[output application/java --- readUrl('classpath://bookHotelstest\mock_variable_1.dwl')]" mediaType="application/java" encoding="UTF-8" />
+						<munit-tools:variable key="rooms" value="#[output application/java --- readUrl('classpath://bookHotelstest\mock_variable_2.dwl')]" mediaType="application/java" encoding="UTF-8" />
+						<munit-tools:variable key="Place" value="#[output application/java --- readUrl('classpath://bookHotelstest\mock_variable_3.dwl')]" mediaType="application/java" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="b2fdfd9a-a714-493a-a97a-f289c1a9c37f" >
+				<munit:payload value="#[readUrl('classpath://bookHotelstest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://bookHotelstest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://bookHotelstest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to bookHotels" doc:id="93ef228c-797e-43a1-9b71-a2b9be548bde" name="bookHotels"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="cc3b0361-e1ba-4537-be5a-0051c8453188" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import bookHotelstest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="getHotels-test" doc:id="3dc0ee11-1e4e-4ede-8e5a-25f52e3f45a0" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Consume" doc:id="7f3e5765-5aa2-4235-acd8-db839b233dfa" processor="wsc:consume">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="a1bbbf02-4535-461e-a6c0-afa162fd77b9" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/java --- readUrl('classpath://getHotelstest\mock_payload1.dwl')]" mediaType="application/java" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://getHotelstest\mock_attributes1.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://getHotelstest\mock_variable_2.dwl')]" />
+						<munit-tools:variable key="place" value="#[output application/java --- readUrl('classpath://getHotelstest\mock_variable_3.dwl')]" mediaType="application/java" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="cffea8df-1a97-4dc6-b4b9-93c1aa50cfd2" >
+				<munit:payload value="#[readUrl('classpath://getHotelstest\set-event_payload1.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getHotelstest\set-event_attributes1.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getHotelstest\set-event_variable_1.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to getHotels" doc:id="26c419f2-e990-4c00-9be5-e5759c0f05c1" name="getHotels"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert-that doc:name="Assert that" doc:id="7afa5602-1b79-468f-8165-5d1ad9e4554f" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
