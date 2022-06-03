@@ -11,7 +11,7 @@ flights:
   client_id: "![sqiLyYyYGHZG/0j/8nVhZS9TLKRNzpepDPoXt7J5kpheqSSFkp3i3c1Iu6rlrKqh]"
   client_secret: "![sFOh62pZIHCnoE75yav9GcNZv9q6jcFvF4Tx6/XOh/xjRO8uDN1BPSQSQ8muElWp]"
 cabs:
-  host: "int-sys-cabs.us-e2.cloudhub.io"
+  host: "![wsHp4H+/EzonUelXaoX1CycB+CK48bjRYNFpzFjnbQE=]"
   port: "![lKhF554wQ+b+m0ppSVJYZw==]"
   protocol: "![FPxDddHz4kIaU8lm/4Xp6w==]"
   basePath: "![QBvHX3GNgaSP/i5SygfUaA==]"
