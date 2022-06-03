@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:cab-booking-api="http://www.mulesoft.org/schema/mule/cab-booking-api"
+	xmlns:filghts-indigo="http://www.mulesoft.org/schema/mule/filghts-indigo" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/filghts-indigo http://www.mulesoft.org/schema/mule/filghts-indigo/current/mule-filghts-indigo.xsd
+http://www.mulesoft.org/schema/mule/cab-booking-api http://www.mulesoft.org/schema/mule/cab-booking-api/current/mule-cab-booking-api.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+	<configuration doc:name="Configuration" doc:id="d6a3a79c-10f4-4fef-84ee-58ad36a36152" defaultErrorHandler-ref="globalError_Handler" />
+	<configuration-properties doc:name="Configuration properties" doc:id="1874ca53-cfeb-4cda-927a-5c4de198199f" file="config.yaml" />
+	<wsc:config name="Web_Service_Consumer_Config1" doc:name="Web Service Consumer Config" doc:id="639a7157-12cf-427b-82dd-c3ae5359ea87" >
+		<wsc:connection wsdlLocation="${secure::wsc.wsdl}" service="hotel" port="default_Port" address="http://int-sys-hotels.us-e2.cloudhub.io/hotel/default_Port">
+			<wsc:web-service-security actor="http://schemas.xmlsoap.org/soap/actor/next" />
+		</wsc:connection>
+	</wsc:config>
+	
+	<filghts-indigo:config name="Filghts_indigo_Config1" doc:name="Filghts-indigo Config" doc:id="53a974cc-b24b-4222-aa1b-454a538ee19d" property_host="${secure::flights.host}" property_port="${secure::flights.port}" property_protocol="${secure::flights.protocol}" property_basePath="${secure::flights.basePath}" />
+	<cab-booking-api:config name="Cab_booking_API_Config1" doc:name="Cab-booking-API Config" doc:id="f98be44b-d610-414a-b4df-2f3fa86e71c4" property_host="${secure::cabs.host}" property_port="${secure::cabs.port}" property_protocol="${secure::cabs.protocol}" property_basePath="${secure::cabs.basePath}" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="7010e5ee-aef0-4e2d-8e39-d6c0571ac723" file="config.yaml" key="you-cant-guess-1" />
+	<error-handler name="globalError_Handler" doc:id="21d037a5-d655-43f4-bcd7-acecdab6f3f4" >
+		<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="29926ee7-9631-4fcd-90a8-2832b63ee014" >
+			<set-payload value="Internal Server Error" doc:name="Set Payload" doc:id="909cd4c3-1659-46ef-a51f-24bf471792d9" />
+			<set-variable value="500" doc:name="Set Variable" doc:id="ceddf8ec-88f5-4ccb-8b81-afd43e583255" variableName="httpStatus"/>
+		</on-error-continue>
+	</error-handler>
+	
+
+	<http:listener-config name="prc-book-my-holiday-httpListenerConfig">
+        <http:listener-connection host="${secure::http.host}" port="${secure::http.port}" />
+    </http:listener-config>
+     <apikit:config name="prc-book-my-holiday-config" api="resource::c22665d2-ec5e-4c7b-998a-8ac6fec8a5fd:prc-book-my-holiday:1.0.3:raml:zip:prc-book-my-holiday.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+     
+     
+</mule>

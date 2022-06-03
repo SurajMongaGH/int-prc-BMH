@@ -1,0 +1,17 @@
+http:
+  host: "![NcAYh8VAPBU7ZoNdsrNQNw==]"
+  port: "![7K4V83HfWNpUV+5IJSQtLQ==]"
+wsc:
+  wsdl: "![j4AwxWErSIXmD3kRDYEIFn7EPLJdvHOLvmj3P2AFCCFIoNEF8JVRt9acgzh5gH8pzY75edyJORc2kgsSSy92CWJ8BaxuMmkGGT1SGNqEiDo=]"
+flights:
+  host: "![mt6yCAE1A+lrUgROruyxHWQGMd8ZVchVrWbro3AmcfOjJvohIukAw25VOKNYmKsS]"
+  port: "![lKhF554wQ+b+m0ppSVJYZw==]"
+  protocol: "![FPxDddHz4kIaU8lm/4Xp6w==]"
+  basePath: "![QBvHX3GNgaSP/i5SygfUaA==]"
+  client_id: "![sqiLyYyYGHZG/0j/8nVhZS9TLKRNzpepDPoXt7J5kpheqSSFkp3i3c1Iu6rlrKqh]"
+  client_secret: "![sFOh62pZIHCnoE75yav9GcNZv9q6jcFvF4Tx6/XOh/xjRO8uDN1BPSQSQ8muElWp]"
+cabs:
+  host: "int-sys-cabs.us-e2.cloudhub.io"
+  port: "![lKhF554wQ+b+m0ppSVJYZw==]"
+  protocol: "![FPxDddHz4kIaU8lm/4Xp6w==]"
+  basePath: "![QBvHX3GNgaSP/i5SygfUaA==]"
