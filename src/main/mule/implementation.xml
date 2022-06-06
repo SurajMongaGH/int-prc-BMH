@@ -39,7 +39,7 @@ payload.body.response.*hotel]]></ee:set-payload>
 		</ee:transform>
 	</flow>
 	<flow name="getAllFlights" doc:id="b45dea38-d2b4-41d4-b0f9-55e29e97eb0c" >
-		<filghts-indigo:get-flights doc:name="Get flights" doc:id="9604ac82-8976-477f-ab31-b479be3a5d00" source="#[attributes.queryParams.source]" destination="#[attributes.queryParams.destination]" date="#[attributes.queryParams.date]" number-of-seats="#[attributes.queryParams.number_of_seats]" client-id="${secure::flights.client_id}" client-secret="${secure::flights.client_secret}" config-ref="Filghts_indigo_Config1"/>
+		<filghts-indigo:get-flights doc:name="Get flights" doc:id="9604ac82-8976-477f-ab31-b479be3a5d00" source="#[attributes.queryParams.source]" destination="#[attributes.queryParams.destination]" date="#[attributes.queryParams.date]" number-of-seats="#[attributes.queryParams.number_of_seats]" client-id="2114b12a2615470b9fe3e7b63cce1b8a" client-secret="A7413Dabf4694787aB1B828fD5F9206F" config-ref="Filghts_indigo_Config1"/>
 	</flow>
 	<flow name="flightBookingDetails" doc:id="11d22e54-8442-494c-8ee5-1e8fe293f740" >
 		<logger level="INFO" doc:name="Logger" doc:id="93f3ac48-0ec7-41b8-af54-8ba04d8258e5" />
@@ -55,7 +55,7 @@ payload.body.response.*hotel]]></ee:set-payload>
 		<cab-booking-api:get-booked-cab-detail-by-booking-id doc:name="Get booked cab detail by booking id" doc:id="eda78023-d87b-4606-ad68-ef9ae44bb768" booking-id="#[attributes.uriParams.bookingId]" config-ref="Cab_booking_API_Config1"/>
 	</flow>
 	<flow name="bookFlight" doc:id="0dfab332-98cd-440e-9dea-f6d2976cd093" >
-		<filghts-indigo:create-book-flight doc:name="Create book flight" doc:id="499ee18d-38bd-41b4-bfd6-2f1d4e80b710" client-id="${secure::flights.client_id}" client-secret="${secure::flights.client_secret}" config-ref="Filghts_indigo_Config1"/>
+		<filghts-indigo:create-book-flight doc:name="Create book flight" doc:id="499ee18d-38bd-41b4-bfd6-2f1d4e80b710" client-id="2114b12a2615470b9fe3e7b63cce1b8a" client-secret="A7413Dabf4694787aB1B828fD5F9206F" config-ref="Filghts_indigo_Config1"/>
 	</flow>
 	<flow name="bookHotels" doc:id="1533dcf8-16d2-4db9-88c5-aca16cdc5443" >
 		<set-variable value="#[attributes.queryParams.Place]" doc:name="Set Variable" doc:id="2372071e-f2f4-4c7c-ab05-da58d69a4318" variableName="Place"/>
