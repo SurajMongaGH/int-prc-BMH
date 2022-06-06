@@ -21,7 +21,7 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 	
 	<filghts-indigo:config name="Filghts_indigo_Config1" doc:name="Filghts-indigo Config" doc:id="53a974cc-b24b-4222-aa1b-454a538ee19d" property_host="${secure::flights.host}" property_port="${secure::flights.port}" property_protocol="${secure::flights.protocol}" property_basePath="${secure::flights.basePath}" />
 	<cab-booking-api:config name="Cab_booking_API_Config1" doc:name="Cab-booking-API Config" doc:id="f98be44b-d610-414a-b4df-2f3fa86e71c4" property_host="${secure::cabs.host}" property_port="${secure::cabs.port}" property_protocol="${secure::cabs.protocol}" property_basePath="${secure::cabs.basePath}" />
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="7010e5ee-aef0-4e2d-8e39-d6c0571ac723" file="config.yaml" key="you-cant-guess-1" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="7010e5ee-aef0-4e2d-8e39-d6c0571ac723" file="config.yaml" key="${key}" />
 	<error-handler name="globalError_Handler" doc:id="21d037a5-d655-43f4-bcd7-acecdab6f3f4" >
 		<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="29926ee7-9631-4fcd-90a8-2832b63ee014" >
 			<set-payload value="Internal Server Error" doc:name="Set Payload" doc:id="909cd4c3-1659-46ef-a51f-24bf471792d9" />
